@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 
 from genaigrader.services import model_service
 
@@ -19,6 +20,16 @@ class Exam(models.Model):
     description = models.CharField(max_length=255)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    external_id = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "external_id"],
+                condition=Q(external_id__isnull=False),
+                name="uniq_exam_user_external_id",
+            )
+        ]
 
     def __str__(self):
         return self.description
