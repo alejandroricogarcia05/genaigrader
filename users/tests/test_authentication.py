@@ -22,6 +22,14 @@ class ApiTokenAuthenticationTests(TestCase):
         user, _ = result
         self.assertEqual(user, self.user)
 
+    def test_bearer_keyword_authenticates(self):
+        request = RequestFactory().get("/")
+        request.META["HTTP_AUTHORIZATION"] = f"Bearer {self.user.api_token}"
+        result = self.auth.authenticate(request)
+        self.assertIsNotNone(result)
+        user, _ = result
+        self.assertEqual(user, self.user)
+
     def test_missing_header_returns_none(self):
         request = RequestFactory().get("/")
         result = self.auth.authenticate(request)
@@ -33,9 +41,15 @@ class ApiTokenAuthenticationTests(TestCase):
         with self.assertRaises(AuthenticationFailed):
             self.auth.authenticate(request)
 
+    def test_invalid_bearer_token_raises_error(self):
+        request = RequestFactory().get("/")
+        request.META["HTTP_AUTHORIZATION"] = "Bearer invalid_token_12345"
+        with self.assertRaises(AuthenticationFailed):
+            self.auth.authenticate(request)
+
     def test_wrong_keyword_returns_none(self):
         request = RequestFactory().get("/")
-        request.META["HTTP_AUTHORIZATION"] = f"Bearer {self.user.api_token}"
+        request.META["HTTP_AUTHORIZATION"] = f"Basic {self.user.api_token}"
         result = self.auth.authenticate(request)
         self.assertIsNone(result)
 
@@ -45,6 +59,12 @@ class ApiTokenAuthenticationTests(TestCase):
         result = self.auth.authenticate(request)
         self.assertIsNone(result)
 
-    def test_authenticate_header_returns_keyword(self):
+    def test_empty_bearer_token_returns_none(self):
+        request = RequestFactory().get("/")
+        request.META["HTTP_AUTHORIZATION"] = "Bearer "
+        result = self.auth.authenticate(request)
+        self.assertIsNone(result)
+
+    def test_authenticate_header_returns_bearer(self):
         result = self.auth.authenticate_header(None)
-        self.assertEqual(result, "Token")
+        self.assertEqual(result, "Bearer")

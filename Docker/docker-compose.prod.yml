@@ -24,13 +24,13 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     # Uncomment if using GPU:
-    deploy:
-       resources:
-         reservations:
-           devices:
-             - driver: nvidia
-               count: all
-               capabilities: [gpu]
+    #deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
   web:
     build:
