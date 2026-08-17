@@ -5,14 +5,17 @@ from users.models import CustomUser
 
 
 class ApiTokenAuthentication(BaseAuthentication):
-    keyword = "Token"
+    keywords = ("Bearer", "Token")
 
     def authenticate(self, request):
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
-        if not auth_header.startswith(self.keyword):
+        token = None
+        for kw in self.keywords:
+            if auth_header.startswith(kw):
+                token = auth_header[len(kw) + 1 :].strip()
+                break
+        if token is None:
             return None
-
-        token = auth_header[len(self.keyword) + 1 :].strip()
         if not token:
             return None
 
@@ -24,4 +27,4 @@ class ApiTokenAuthentication(BaseAuthentication):
         return (user, None)
 
     def authenticate_header(self, request):
-        return self.keyword
+        return "Bearer"

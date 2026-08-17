@@ -55,6 +55,7 @@ from genaigrader.views.user_settings_view import UserSettingsView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path("api/v1/", include("api.urls")),
     path("evaluate/", evaluate_view, name="evaluate"),
     path("course/", course_view, name="course"),
     path("upload/", upload_file, name="upload_file"),
