@@ -23,6 +23,7 @@
         <a class="boton nav-action" href="{% url 'analysis' %}">Results</a>
         <a class="boton nav-action" href="{% url 'course' %}">Courses</a>
         <a class="boton nav-action" href="{% url 'api' %}">Models</a>
+        <a class="boton nav-action" href="{% url 'api_token' %}">API Token</a>
           {% if "@genaigrader.local" in user.email %}
                 <a class="boton nav-action" href="{% url 'user_settings' %}">Settings</a>
         {% endif %}

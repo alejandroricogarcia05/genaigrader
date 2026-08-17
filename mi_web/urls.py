@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from genaigrader.views.analysis_view import analysis_view
+from genaigrader.views.api_token_view import ApiTokenView
 from genaigrader.views.api_views import (
     api_view,
     create_model,
@@ -54,6 +55,7 @@ from genaigrader.views.user_settings_view import UserSettingsView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path("api/v1/", include("api.urls")),
     path("evaluate/", evaluate_view, name="evaluate"),
     path("course/", course_view, name="course"),
     path("upload/", upload_file, name="upload_file"),
@@ -101,5 +103,6 @@ urlpatterns = [
     path("model/pull/", pull_model, name="pull_model"),
     path("task/<str:task_id>/", task_status, name="task_status"),
     path("batch-task-status/", batch_task_status, name="batch_task_status"),
+    path("api-token/", ApiTokenView.as_view(), name="api_token"),
     path("", home_view, name="home"),
 ]

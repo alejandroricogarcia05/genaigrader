@@ -9,6 +9,7 @@ dependencies = [
     "django>=5.2.1",
     "django-allauth[socialaccount]",
     "django-q2>=1.0.0",
+    "djangorestframework",
     "gunicorn>=23.0.0",
     "ollama>=0.4.8",
     "openai>=1.78.1",

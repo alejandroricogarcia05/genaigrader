@@ -16,3 +16,11 @@ def get_models_for_user(user):
         .select_related("family")
     )
     return local_models, external_models
+
+
+def get_model_names_for_user(user):
+    local_models, external_models = get_models_for_user(user)
+    names = {m.description for m in local_models} | {
+        m.description for m in external_models
+    }
+    return sorted(names)

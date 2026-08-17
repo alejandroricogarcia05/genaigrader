@@ -24,13 +24,13 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     # Uncomment if using GPU:
-    deploy:
-       resources:
-         reservations:
-           devices:
-             - driver: nvidia
-               count: all
-               capabilities: [gpu]
+    #deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
   web:
     build:
@@ -45,7 +45,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "8000:8000"
+      - "8080:8000"
     environment:
       - DATABASE_URL=${DATABASE_URL:?DATABASE_URL is required}
       - OLLAMA_HOST=${OLLAMA_HOST:-http://ollama:11434}

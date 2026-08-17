@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}GenAI Grader - API Token{% endblock %}
+{% block header %}GenAI Grader - API Token{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/api_token.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>API Token</h2>
+  <p class="settings-subtitle">Use this token to authenticate API requests. Keep it secret.</p>
+
+  <div id="api-token-section">
+    <div class="form-group">
+      <label for="api-token-input">Your API Token</label>
+      <input type="text" id="api-token-input" value="{{ user.api_token }}" readonly disabled aria-readonly="true">
+    </div>
+
+    <div class="api-token-actions">
+      <button type="button" id="copy-token-btn" class="btn-primary">Copy token</button>
+      <form method="post" id="rotate-token-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="rotate">
+        <button type="submit" id="rotate-token-btn" class="btn-danger">Rotate token</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/api_token.js' %}"></script>
+{% endblock %}

@@ -51,12 +51,14 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
 
 INSTALLED_APPS = [
     "users.apps.UsersConfig",
+    "api.apps.ApiConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "django_q",
     "allauth",
     "allauth.account",
@@ -286,6 +288,18 @@ MEDIA_ROOT = BASE_DIR / "uploaded_files"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "users.authentication.ApiTokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+    "EXCEPTION_HANDLER": "api.exceptions.exception_handler",
+}
 
 LOGIN_REDIRECT_URL = "home"  # Redirect here after logging in
 LOGOUT_REDIRECT_URL = "account_login"  # Redirect here after logging out
