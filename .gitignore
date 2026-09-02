@@ -155,6 +155,9 @@ ollama.pid
 .env.django.base
 .idea
 
-# AI agent context files (local only, not versioned)
-AGENTS.md
-.opencode/
+# AI agent context files — tracked in the fork (do NOT push to upstream)
+# .opencode runtime/dependency junk (keep skills/ + AGENTS.md versioned)
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/bun.lock
