@@ -25,6 +25,14 @@ class ApiTokenViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.user.api_token)
 
+    def test_get_renders_api_url_when_authenticated(self):
+        self.client.login(username="tokenuser", password="password123")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("api_url", response.context)
+        self.assertTrue(response.context["api_url"].endswith("/api/v1/"))
+        self.assertContains(response, response.context["api_url"])
+
     def test_rotate_without_csrf_returns_403(self):
         csrf_client = Client(enforce_csrf_checks=True)
         csrf_client.login(username="tokenuser", password="password123")

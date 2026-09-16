@@ -10,17 +10,27 @@
 
 {% block content %}
 <div class="container">
-  <h2>API Token</h2>
-  <p class="settings-subtitle">Use this token to authenticate API requests. Keep it secret.</p>
+  <h2>API Configuration</h2>
+  <p class="settings-subtitle">Use this base URL and token to configure external services and authenticate API requests.</p>
 
   <div id="api-token-section">
     <div class="form-group">
+      <label for="api-url-input">API Base URL</label>
+      <div class="input-action-group">
+        <input type="text" id="api-url-input" value="{{ api_url }}" readonly disabled aria-readonly="true">
+        <button type="button" id="copy-url-btn" class="btn-secondary">Copy URL</button>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label for="api-token-input">Your API Token</label>
-      <input type="text" id="api-token-input" value="{{ user.api_token }}" readonly disabled aria-readonly="true">
+      <div class="input-action-group">
+        <input type="text" id="api-token-input" value="{{ user.api_token }}" readonly disabled aria-readonly="true">
+        <button type="button" id="copy-token-btn" class="btn-primary">Copy token</button>
+      </div>
     </div>
 
     <div class="api-token-actions">
-      <button type="button" id="copy-token-btn" class="btn-primary">Copy token</button>
       <form method="post" id="rotate-token-form">
         {% csrf_token %}
         <input type="hidden" name="action" value="rotate">

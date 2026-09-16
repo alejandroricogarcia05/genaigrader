@@ -53,23 +53,35 @@
   document.addEventListener("DOMContentLoaded", function () {
     var copyBtn = document.getElementById("copy-token-btn");
     var tokenInput = document.getElementById("api-token-input");
+    var copyUrlBtn = document.getElementById("copy-url-btn");
+    var urlInput = document.getElementById("api-url-input");
     var rotateForm = document.getElementById("rotate-token-form");
     var rotateBtn = document.getElementById("rotate-token-btn");
 
+    function copyInputToClipboard(inputElement, successMessage) {
+      var val = inputElement.value;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(val).then(function () {
+          showToast(successMessage, "success");
+        });
+      } else {
+        inputElement.removeAttribute("disabled");
+        inputElement.select();
+        document.execCommand("copy");
+        inputElement.setAttribute("disabled", "");
+        showToast(successMessage, "success");
+      }
+    }
+
+    if (copyUrlBtn && urlInput) {
+      copyUrlBtn.addEventListener("click", function () {
+        copyInputToClipboard(urlInput, "API URL copied to clipboard");
+      });
+    }
+
     if (copyBtn && tokenInput) {
       copyBtn.addEventListener("click", function () {
-        var token = tokenInput.value;
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(token).then(function () {
-            showToast("Token copied to clipboard", "success");
-          });
-        } else {
-          tokenInput.removeAttribute("disabled");
-          tokenInput.select();
-          document.execCommand("copy");
-          tokenInput.setAttribute("disabled", "");
-          showToast("Token copied to clipboard", "success");
-        }
+        copyInputToClipboard(tokenInput, "Token copied to clipboard");
       });
     }
 

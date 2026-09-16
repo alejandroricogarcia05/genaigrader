@@ -34,8 +34,10 @@ h2 {
   font-weight: 600;
 }
 
+#api-url-input,
 #api-token-input {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   padding: 0.75rem 1rem;
   border: 2px solid var(--border-color);
   border-radius: 8px;
@@ -46,19 +48,31 @@ h2 {
   font-family: monospace;
 }
 
+.input-action-group {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.input-action-group button {
+  flex-shrink: 0;
+  width: 130px;
+}
+
 .api-token-actions {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
 }
 
 .btn-primary {
-  flex: 1;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   background: var(--primary-color);
   color: var(--text-color);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   border: none;
@@ -73,19 +87,43 @@ h2 {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
+.btn-secondary {
+  padding: 0.75rem 1rem;
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s;
+  box-sizing: border-box;
+}
+
+.btn-secondary:hover {
+  background: var(--primary-color);
+  color: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
 .btn-danger {
   width: 100%;
-  padding: 1rem;
+  max-width: 280px;
+  padding: 0.75rem 1rem;
   background: transparent;
   color: var(--error-color);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   border: 2px solid var(--error-color);
   text-align: center;
   transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
   box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
 }
 
 .btn-danger:hover {
@@ -96,12 +134,20 @@ h2 {
 }
 
 #rotate-token-form {
-  flex: 1;
+  width: 100%;
   margin: 0;
 }
 
 @media (max-width: 768px) {
-  .api-token-actions {
+  .input-action-group {
     flex-direction: column;
+  }
+
+  .input-action-group button {
+    width: 100%;
+  }
+
+  .btn-danger {
+    max-width: 100%;
   }
 }
